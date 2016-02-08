@@ -20,8 +20,8 @@ angular
             }
         }
     }])
-    .factory("splitService", ["optList", function(optList) {
-        return function(line) {
+    .filter("split",["optList",function(optList){
+    	return function(line) {
             var vals = line.split(optList.textSeparator);
             return {
                 name: vals[0],
@@ -30,7 +30,7 @@ angular
             }
         }
     }])
-    .factory("buildService", ["fetchService", "splitService", function(fetchService, splitService) {
+    .factory("buildService", ["fetchService", "splitFilter", function(fetchService, splitFilter) {
         var obj;
         return function() {
             var result = [],
@@ -51,7 +51,7 @@ angular
                         result.push(angular.extend({
                             minPic: obj.items[i].photo_130,
                             maxPic: obj.items[i].photo_604
-                        }, splitService(obj.items[i].text)));
+                        }, splitFilter(obj.items[i].text)));
                     }
                     //console.log(result);
                     this.data = result;
