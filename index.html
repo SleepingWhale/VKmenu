@@ -4,11 +4,43 @@
 <head>
     <meta charset="UTF-8">
     <title>VKmenu</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <style type="text/css">
+    .custom {
+        height: 150px;
+        border: black 1px solid;
+    }
+    
+    .custom img {
+        float: left;
+    }
+    </style>
 </head>
 
-<body ng-controller="mainCtrl as main">
-
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-lg-9" ng-controller="mainCtrl as main">
+                <div class="row">
+                    <div class="col-xs-12 col-md-6 col-lg-6 custom" ng-repeat="item in main.data">
+                        <p ng-bind="item.name"></p>
+                        <img ng-src="{{item.minPic}}">
+                        <p ng-bind="item.descrription"></p>
+                        <p ng-bind="item.price"></p>
+                        <button ng-click="main.add(item)">+</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-lg-3" ng-controller="orderCtrl as order">
+                <p>ORDER</p>
+                <div ng-repeat="(id, item) in order.listOrder">
+                  
+                  <p ng-bind="{{item.qty}}"></p>
+                  <p ng-bind="{{item.price}}"></p>
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.js">
     </script>
     <script src="JS/app.js"></script>
