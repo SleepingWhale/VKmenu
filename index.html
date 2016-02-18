@@ -5,44 +5,59 @@
     <meta charset="UTF-8">
     <title>VKmenu</title>
     <link rel="stylesheet" href="css/bootstrap.css">
-    <style type="text/css">
-    .custom {
-        height: 150px;
-        border: black 1px solid;
-    }
-    
-    .custom img {
-        float: left;
-    }
-    </style>
+    <link rel="stylesheet" href="css/custom.css">
 </head>
 
-<body>
+<body ng-controller="mainCtrl as main">
+    <div id="maxPic" ng-show="main.showPic" ng-click="main.showMaxPic()">
+        <img class="img-responsive" ng-src="{{main.pic}}" ng-click="main.showMaxPic()">
+    </div>
     <div class="container">
         <div class="row">
-            <div class="col-xs-12 col-lg-9" ng-controller="mainCtrl as main">
+            <div class="col-xs-12 col-lg-9">
                 <div class="row">
-                    <div class="col-xs-12 col-md-6 col-lg-6 custom" ng-repeat="item in main.data">
-                        <p ng-bind="item.name"></p>
-                        <img ng-src="{{item.minPic}}">
-                        <p ng-bind="item.descrription"></p>
-                        <p ng-bind="item.price"></p>
+                    <div class="col-xs-12 col-md-6 col-lg-6 menuItem" ng-repeat="item in main.data">
+                        <p><span ng-bind="item.name" class="name"></span> <span ng-bind="item.price | rub" class="price"></span></p>
+                        <img ng-src="{{item.minPic}}" ng-click="main.showMaxPic(item.maxPic)">
+                        <p ng-bind="item.descrription" class="descrription"></p>
                         <button ng-click="main.add(item)">+</button>
+                        <button ng-click="main.remove(item)">-</button>
                     </div>
                 </div>
             </div>
-            <div class="col-xs-12 col-lg-3" ng-controller="orderCtrl as order">
-                <p>ORDER</p>
-                <div ng-repeat="(id, item) in order.listOrder">
-                  
-                  <p ng-bind="{{item.qty}}"></p>
-                  <p ng-bind="{{item.price}}"></p>
+            <div class="col-xs-12 col-lg-3 visible-lg orderCont">
+                <div class="order">
+                    <p>Заказ</p>
+                    <table>
+                        <tr ng-repeat="item in main.listOrder">
+                            <td>
+                                <span ng-bind="item.name"></span>
+                            </td>
+                            <td>
+                                <button ng-click="main.add(item)">+</button>
+                            </td>
+                            <td>
+                                <span ng-bind="item.qty"></span>
+                            </td>
+                            <td>
+                                <button ng-click="main.remove(item)">-</button>
+                            </td>
+                            <td>
+                                <span ng-bind="item.price | rub"></span>
+                            </td>
+                        </tr>
+                    </table>
+                    <p>Сумма заказа: <b ng-bind="main.getTotal"></b></p>
                 </div>
             </div>
         </div>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.js">
     </script>
+    <!--
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>-->
     <script src="JS/app.js"></script>
 </body>
 
