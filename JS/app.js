@@ -2,6 +2,7 @@ angular
     .module("menu", [])
     .constant("optList", {
         textSeparator: " -",
+        curSymbol: "р.",
         config: {
             method: "JSONP",
             url: "https://api.vk.com/method/photos.get",
@@ -32,6 +33,11 @@ angular
                 })(),
                 price: parseInt(vals[2])
             };
+        };
+    }])
+    .filter("rub", ["optList",function(optList){
+        return function(numb){
+            return numb + ' ' + optList.curSymbol;
         };
     }])
     .factory("buildService", ["fetchService", "splitFilter", function(fetchService, splitFilter) {
@@ -70,12 +76,12 @@ angular
                     orderObj[item.id] = {
                         name: item.name,
                         price: item.price,
-                        qty: 1
+                        qty: 1,
+                        id: item.id
                     };
                 } else {
                     orderObj[item.id].qty += 1;
                 }
-                console.log(orderObj);
             },
             remove: function(item) {
                 var position = orderObj[item.id];
@@ -91,17 +97,41 @@ angular
             },
             get: function() {
                 return orderObj;
+            },
+            getTotal: function() {
+                var total = 0;
+                if (Object.keys(orderObj).length > 0) {
+                    for (var position in orderObj) {
+                        total += orderObj[position].price * orderObj[position].qty;
+                    }
+                }
+                return total;
             }
         };
     }])
-    .controller("mainCtrl", ["buildService","orderService", function(buildService, orderService) {
-        var self = this;
-        self.data = buildService.getAll();
-        self.add = orderService.add;
+    .directive("orderWidget",[function() {
+        // body...
     }])
-    .controller("orderCtrl", ["orderService", function(orderService) {
+    .controller("mainCtrl", ["buildService", "orderService", function(buildService, orderService) {
         var self = this;
+        self.showPic = false;
+        self.data = buildService.getAll();
         self.listOrder = orderService.get();
+        self.add = function(arg) {
+            orderService.add(arg);
+            self.getTotal = orderService.getTotal();
+        };
+        self.remove = function(arg) {
+            orderService.remove(arg);
+            self.getTotal = orderService.getTotal();
+        };
+        self.showMaxPic = function(url) {
+            if (!url) {
+                self.showPic = false;
+                self.pic = "#";
+            } else {
+                self.pic = url;
+                self.showPic = true;
+            }
+        };
     }]);
-
-//"https://api.vk.com/method/photos.get?owner_id=-54288406&album_id=174507840&v=5.44&callback=JSON_CALLBACK"
