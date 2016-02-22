@@ -1,10 +1,11 @@
 .menuItem {
-    height: 150px;
-    border: black 1px solid;
-}
+    height: 220px;
 
-.menuItem img {
+}
+.menuItemLeft{
     float: left;
+}
+.menuItemLeft img {
     cursor: pointer;
 }
 
@@ -15,7 +16,7 @@
     height: 100%;
     text-align: center;
     font: 0/0 a;
-    background-color: rgba(117, 117, 117, 0.6); 
+    background-color: rgba(117, 117, 117, 0.6);
 }
 
 #maxPic:before {
@@ -34,12 +35,49 @@
     cursor: pointer;
 }
 
-.orderCont{
+.relCont {
     position: relative;
-
-
 }
 
-.order {
+.orderMainWidget {
     position: fixed;
+    background-color: lightgrey;
+    width: inherit;
+}
+
+.orderMobileWidget {
+    position: fixed;
+    bottom: 0;
+    right: 10px;
+    background-color: lightgrey;
+    max-height: 80%;
+    overflow-y: auto;
+}
+
+@media screen and (max-width: 750px) {
+    body {
+        font-size: 17px;
+        color: black;
+    }
+}
+
+@media screen and (min-width: 750px) {
+    body {
+        font-size: 17px;
+        color: red;
+    }
+}
+
+@media screen and (min-width: 970px) {
+    body {
+        font-size: 15px;
+        color: green;
+    }
+}
+
+@media screen and (min-width: 1170px) {
+    body {
+        font-size: 13px;
+        color: blue;
+    }
 }
