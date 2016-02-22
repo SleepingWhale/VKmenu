@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html ng-app="menu">
+<html ng-app="menu" lang="ru">
 
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>VKmenu</title>
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/custom.css">
@@ -10,44 +11,47 @@
 
 <body ng-controller="mainCtrl as main">
     <div id="maxPic" ng-show="main.showPic" ng-click="main.showMaxPic()">
-        <img class="img-responsive" ng-src="{{main.pic}}" ng-click="main.showMaxPic()">
+        <img class="img-responsive thumbnail" ng-src="{{main.pic}}" ng-click="main.showMaxPic()">
     </div>
     <div class="container">
         <div class="row">
+            <div class="col-xs-12">
+                <h1 ng-bind="main.siteName"></h1>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-xs-12 col-lg-9">
                 <div class="row">
-                    <div class="col-xs-12 col-md-6 col-lg-6 menuItem" ng-repeat="item in main.data">
-                        <p><span ng-bind="item.name" class="name"></span> <span ng-bind="item.price | rub" class="price"></span></p>
-                        <img ng-src="{{item.minPic}}" ng-click="main.showMaxPic(item.maxPic)">
-                        <p ng-bind="item.descrription" class="descrription"></p>
-                        <button ng-click="main.add(item)">+</button>
-                        <button ng-click="main.remove(item)">-</button>
+                    <div class="col-xs-12 col-md-6 col-lg-6" ng-repeat="item in main.data">
+                        <div class="well menuItem">
+                            <p><span ng-bind="item.name" class="name"></span></p>
+                            <div class="menuItemLeft">
+                                <img ng-src="{{item.minPic}}" ng-click="main.showMaxPic(item.maxPic)" class="thumbnail">
+                                <span ng-bind="item.price | rub" class="price"></span>
+                                <div class="btn-group">
+                                    <button ng-click="main.add(item)" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-plus"></span></button>
+                                    <button ng-click="main.remove(item)" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-minus"></span></button>
+                                </div>
+                            </div>
+                            <p ng-bind="item.descrription" class="descrription"></p>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-xs-12 col-lg-3 visible-lg orderCont">
-                <div class="order">
-                    <p>Заказ</p>
-                    <table>
-                        <tr ng-repeat="item in main.listOrder">
-                            <td>
-                                <span ng-bind="item.name"></span>
-                            </td>
-                            <td>
-                                <button ng-click="main.add(item)">+</button>
-                            </td>
-                            <td>
-                                <span ng-bind="item.qty"></span>
-                            </td>
-                            <td>
-                                <button ng-click="main.remove(item)">-</button>
-                            </td>
-                            <td>
-                                <span ng-bind="item.price | rub"></span>
-                            </td>
-                        </tr>
-                    </table>
-                    <p>Сумма заказа: <b ng-bind="main.getTotal"></b></p>
+            <div class="col-xs-12 col-lg-3 visible-lg relCont">
+                <div class="orderMainWidget well">
+                    <p>Ваш заказ:</p>
+                    <div order-widget></div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 hidden-lg">
+                <div class="orderMobileWidget well">
+                    <div ng-hide="main.orderMobileWidget">
+                        <div order-widget></div>
+                    </div>
+                    <button class="btn btn-default btn-lg pull-right" ng-click="main.orderMobileWidget=!(main.orderMobileWidget)"><span class="glyphicon glyphicon-menu-hamburger"></span><span> Ваш Заказ</span></button>
                 </div>
             </div>
         </div>
@@ -56,8 +60,8 @@
     </script>
     <!--
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>-->
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    -->
     <script src="JS/app.js"></script>
 </body>
 
