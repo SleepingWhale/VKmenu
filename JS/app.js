@@ -3,7 +3,7 @@ angular
     .constant("optList", {
         textSeparator: " -",
         curSymbol: "р.",
-        config: {
+        configAlbum: {
             method: "JSONP",
             url: "https://api.vk.com/method/photos.get",
             params: {
@@ -12,12 +12,24 @@ angular
                 v: "5.44",
                 callback: "JSON_CALLBACK"
             }
+        },
+        configDetails: {
+            method: "JSONP",
+            url: "https://api.vk.com/method/groups.getById",
+            params: {
+                group_id: "54288406",
+                v: "5.44",
+                callback: "JSON_CALLBACK"
+            }
         }
     })
     .factory("fetchService", ["$http", "optList", function($http, optList) {
         return {
-            query: function() {
-                return $http(optList.config);
+            queryAlbum: function() {
+                return $http(optList.configAlbum);
+            },
+            queryDetails: function() {
+                return $http(optList.configDetails);
             }
         };
     }])
@@ -35,15 +47,15 @@ angular
             };
         };
     }])
-    .filter("rub", ["optList",function(optList){
-        return function(numb){
-            return numb + ' ' + optList.curSymbol;
+    .filter("rub", ["optList", function(optList) {
+        return function(numb) {
+            return numb + optList.curSymbol;
         };
     }])
     .factory("buildService", ["fetchService", "splitFilter", function(fetchService, splitFilter) {
-        var result = [],
+        var album = [],
             obj;
-        fetchService.query()
+        fetchService.queryAlbum()
             .then(function(success) {
                 obj = success.data.response;
                 var i, l;
@@ -51,7 +63,7 @@ angular
                     if (obj.items[i].text.length < 3) {
                         continue;
                     }
-                    result.push(angular.extend({
+                    album.push(angular.extend({
                         id: i,
                         minPic: obj.items[i].photo_130,
                         maxPic: obj.items[i].photo_604
@@ -62,8 +74,11 @@ angular
                 console.log(error);
             });
         return {
-            getAll: function() {
-                return result;
+            getAlbum: function() {
+                return album;
+            },
+            getDetails: function() {
+                return fetchService.queryDetails();
             }
         };
 
@@ -109,13 +124,23 @@ angular
             }
         };
     }])
-    .directive("orderWidget",[function() {
-        // body...
+    .directive("orderWidget", [function() {
+        return {
+            templateUrl: "templates/orderWidget.html"
+        };
     }])
     .controller("mainCtrl", ["buildService", "orderService", function(buildService, orderService) {
         var self = this;
         self.showPic = false;
-        self.data = buildService.getAll();
+        self.orderMobileWidget = true;
+        self.data = buildService.getAlbum();
+        buildService.getDetails()
+        .then(function(success) {
+                self.siteName = success.data.response[0].name;
+            }, function(error) {
+                console.log('something went wrong');
+                console.log(error);
+            });
         self.listOrder = orderService.get();
         self.add = function(arg) {
             orderService.add(arg);
