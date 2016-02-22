@@ -1,0 +1,20 @@
+<table class="table">
+    <tr ng-repeat="item in main.listOrder">
+        <td>
+            <span ng-bind="item.name"></span>
+        </td>
+        <td>
+            <button ng-click="main.add(item)" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-plus"></span></button>
+        </td>
+        <td>
+            <span ng-bind="item.qty"></span>
+        </td>
+        <td>
+            <button ng-click="main.remove(item)" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-minus"></span></button>
+        </td>
+        <td>
+            <span ng-bind="item.price | rub"></span>
+        </td>
+    </tr>
+</table>
+<p ng-show="main.getTotal">Сумма заказа: <b ng-bind="main.getTotal"></b></p>
