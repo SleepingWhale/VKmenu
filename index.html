@@ -16,13 +16,13 @@
     <div class="container">
         <div class="row">
             <div class="col-xs-12">
-                <h1 ng-bind="main.siteName"></h1>
+                <h1 ng-bind="main.siteDetails().name"></h1>
             </div>
         </div>
         <div class="row">
             <div class="col-xs-12 col-lg-9">
                 <div class="row">
-                    <div class="col-xs-12 col-md-6 col-lg-6" ng-repeat="item in main.data">
+                    <div class="col-xs-12 col-md-6 col-lg-6" ng-repeat="item in main.data()">
                         <div class="well menuItem">
                             <p><span ng-bind="item.name" class="name"></span></p>
                             <div class="menuItemLeft">

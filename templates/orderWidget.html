@@ -1,5 +1,5 @@
 <table class="table">
-    <tr ng-repeat="item in main.listOrder">
+    <tr ng-repeat="item in main.listOrder()">
         <td>
             <span ng-bind="item.name"></span>
         </td>
@@ -17,4 +17,4 @@
         </td>
     </tr>
 </table>
-<p ng-show="main.getTotal">Сумма заказа: <b ng-bind="main.getTotal"></b></p>
+<p>Сумма заказа: <b ng-bind="main.getTotal()"></b></p>
