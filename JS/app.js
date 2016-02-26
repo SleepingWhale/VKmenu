@@ -38,12 +38,8 @@ angular
             var vals = line.split(optList.textSeparator);
             return {
                 name: vals[0],
-                descrription: (function() {
-                    if (vals[1]) {
-                        return vals[1].replace(/\,(?=\S)/g, ", ");
-                    }
-                })(),
-                price: parseInt(vals[2])
+                descrription: (vals[1] ? vals[1].replace(/\,(?=\S)/g, ", ") : ""),
+                price: parseInt(vals[2], 10) || 0
             };
         };
     }])
@@ -125,8 +121,10 @@ angular
             getTotal: function() {
                 var total = 0;
                 if (Object.keys(orderObj).length > 0) {
-                    for (var position in orderObj) {
-                        total += orderObj[position].price * orderObj[position].qty;
+                    for (var pos in orderObj) {
+                        if (orderObj.hasOwnProperty(pos)) {
+                            total += orderObj[pos].price * orderObj[pos].qty;
+                        }
                     }
                 }
                 return total;
