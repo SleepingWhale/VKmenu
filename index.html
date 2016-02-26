@@ -5,12 +5,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>VKmenu</title>
-    <link rel="stylesheet" href="CSS/bootstrap.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <link rel="stylesheet" href="CSS/custom.css">
 </head>
 
 <body ng-controller="mainCtrl as main">
-    <div id="maxPic" ng-show="main.showPic" ng-click="main.showMaxPic()">
+    <div class="maxPic" ng-show="main.showPic" ng-click="main.showMaxPic()">
         <img class="img-responsive thumbnail" ng-src="{{main.pic}}" ng-click="main.showMaxPic()">
     </div>
     <div class="container">

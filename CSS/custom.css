@@ -9,24 +9,25 @@
     cursor: pointer;
 }
 
-#maxPic {
+.maxPic {
     position: fixed;
     z-index: 100;
     width: 100%;
     height: 100%;
     text-align: center;
     font: 0/0 a;
+    background-color: rgb(117, 117, 117);
     background-color: rgba(117, 117, 117, 0.6);
 }
 
-#maxPic:before {
+.maxPic:before {
     content: ' ';
     display: inline-block;
     vertical-align: middle;
     height: 100%;
 }
 
-#maxPic img {
+.maxPic img {
     margin-left: auto;
     margin-right: auto;
     display: inline-block;
