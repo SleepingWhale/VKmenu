@@ -54,6 +54,7 @@ angular
     }])
     .factory("buildService", ["fetchService", "splitFilter", function(fetchService, splitFilter) {
         var album = [],
+            details,
             obj;
         fetchService.queryAlbum()
             .then(function(success) {
@@ -73,12 +74,20 @@ angular
                 console.log('something went wrong');
                 console.log(error);
             });
+        fetchService.queryDetails()
+            .then(function(success) {
+                details = success.data.response[0];
+            }, function(error) {
+                console.log('something went wrong');
+                console.log(error);
+            });
+
         return {
             getAlbum: function() {
                 return album;
             },
             getDetails: function() {
-                return fetchService.queryDetails();
+                return details;
             }
         };
 
@@ -133,23 +142,13 @@ angular
         var self = this;
         self.showPic = false;
         self.orderMobileWidget = true;
-        self.data = buildService.getAlbum();
-        buildService.getDetails()
-        .then(function(success) {
-                self.siteName = success.data.response[0].name;
-            }, function(error) {
-                console.log('something went wrong');
-                console.log(error);
-            });
-        self.listOrder = orderService.get();
-        self.add = function(arg) {
-            orderService.add(arg);
-            self.getTotal = orderService.getTotal();
-        };
-        self.remove = function(arg) {
-            orderService.remove(arg);
-            self.getTotal = orderService.getTotal();
-        };
+        self.data = buildService.getAlbum;
+        self.getTotal = orderService.getTotal;
+        self.listOrder = orderService.get;
+        self.add = orderService.add;
+        self.remove = orderService.remove;
+        self.siteDetails = buildService.getDetails;
+
         self.showMaxPic = function(url) {
             if (!url) {
                 self.showPic = false;
