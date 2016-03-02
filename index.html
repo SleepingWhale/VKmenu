@@ -41,7 +41,7 @@
             <div class="col-xs-12 col-lg-3 visible-lg relCont">
                 <div class="orderMainWidget well">
                     <p>Ваш заказ:</p>
-                    <div order-widget></div>
+                    <div ng-include="'templates/orderWidget.html'"></div>
                 </div>
             </div>
         </div>
@@ -49,7 +49,7 @@
             <div class="col-xs-12 hidden-lg">
                 <div class="orderMobileWidget well">
                     <div ng-hide="main.orderMobileWidget">
-                        <div order-widget></div>
+                        <div ng-include="'templates/orderWidget.html'"></div>
                     </div>
                     <button class="btn btn-default btn-lg pull-right" ng-click="main.orderMobileWidget=!(main.orderMobileWidget)"><span class="glyphicon glyphicon-menu-hamburger"></span><span> Ваш Заказ</span></button>
                 </div>
