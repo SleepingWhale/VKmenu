@@ -131,11 +131,6 @@ angular
             }
         };
     }])
-    .directive("orderWidget", [function() {
-        return {
-            templateUrl: "templates/orderWidget.html"
-        };
-    }])
     .controller("mainCtrl", ["buildService", "orderService", function(buildService, orderService) {
         var self = this;
         self.showPic = false;
